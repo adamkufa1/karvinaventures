@@ -1,1622 +1,805 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Karvina Ventures — AI Sales Automation for US Solar Companies</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karvina Ventures | Solar Energy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:       #09100F;
-  --navy:     #0D1814;
-  --card:     #111F1A;
-  --card2:    #172420;
-  --line:     rgba(255,255,255,0.07);
-  --line2:    rgba(255,255,255,0.12);
-  --green:    #00E87A;
-  --gold:     #F5C542;
-  --grad:     linear-gradient(135deg, #00E87A 0%, #00C9B1 100%);
-  --grad-r:   linear-gradient(135deg, #00C9B1 0%, #00E87A 100%);
-  --grad-gold: linear-gradient(135deg, #F5C542 0%, #E8A000 100%);
-  --white:    #F0F7F4;
-  --muted:    #6B8A7A;
-  --light:    #A8C4B4;
-  --red:      #FF4E4E;
-  --wa:       #25D366;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);color:var(--white);
-  overflow-x:hidden;line-height:1.5;
-  -webkit-font-smoothing:antialiased;
-}
+  :root {
+    --bg: #0a0f1e;
+    --surface: #161616;
+    --surface2: #1f1f1f;
+    --border: #2a2a2a;
+    --accent: #00c2ff;
+    --accent-dim: rgba(255,222,89,0.1);
+    --text: #f0ede8;
+    --muted: #888;
+    --radius: 10px;
+  }
 
-/* ─── LOGO SVG ─── */
-.karvina-logo {
-  display:flex;align-items:center;gap:10px;text-decoration:none;
-}
-.karvina-logo-mark {
-  width:38px;height:38px;flex-shrink:0;
-}
-.karvina-logo-text {
-  display:flex;flex-direction:column;line-height:1;
-}
-.karvina-logo-name {
-  font-family:'Syne',sans-serif;font-weight:800;font-size:17px;
-  letter-spacing:0.08em;text-transform:uppercase;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.karvina-logo-sub {
-  font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:2px;
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html { scroll-behavior: smooth; }
 
-/* ─── GRADIENT TEXT ─── */
-.grad-text{
-  background:var(--grad);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.grad-gold-text{
-  background:var(--grad-gold);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.grad-border{
-  border:1px solid transparent;
-  background:linear-gradient(var(--card),var(--card)) padding-box,
-              var(--grad) border-box;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+  }
 
-/* ─── NAV ─── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 48px;
-  background:rgba(9,16,15,0.94);backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--line);
-}
-.nav-right{display:flex;align-items:center;gap:24px;}
-.nav-link{color:var(--muted);font-size:13px;font-weight:500;text-decoration:none;transition:color .2s;letter-spacing:0.03em;}
-.nav-link:hover{color:var(--white);}
-.nav-cta{
-  background:var(--grad);color:#09100F;
-  font-size:13px;font-weight:700;letter-spacing:0.04em;
-  padding:9px 22px;border-radius:6px;text-decoration:none;
-  transition:all .2s;box-shadow:0 0 20px rgba(0,232,122,0.2);
-}
-.nav-cta:hover{transform:translateY(-1px);box-shadow:0 0 30px rgba(0,232,122,0.35);}
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(11,11,11,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-/* ─── HERO ─── */
-#hero{
-  min-height:100vh;display:flex;flex-direction:column;
-  justify-content:center;padding:140px 48px 100px;
-  position:relative;overflow:hidden;
-}
-.hero-bg{
-  position:absolute;inset:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse 60% 60% at 90% 20%, rgba(0,232,122,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(0,201,177,0.06) 0%, transparent 60%);
-}
-.hero-grid{
-  position:absolute;inset:0;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(0,232,122,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,232,122,0.04) 1px, transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-}
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+  }
 
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(0,232,122,0.08);border:1px solid rgba(0,232,122,0.2);
-  color:var(--green);font-size:11px;font-weight:700;letter-spacing:0.18em;
-  text-transform:uppercase;padding:7px 16px;border-radius:4px;
-  margin-bottom:32px;width:fit-content;
-}
-.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite;}
-@keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.2;transform:scale(0.6);}}
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
 
-h1.hero-h{
-  font-family:'Syne',sans-serif;
-  font-size:clamp(58px,9vw,130px);
-  line-height:0.9;letter-spacing:-0.01em;
-  max-width:1000px;
-}
-.hero-line-white{color:var(--white);}
-.hero-line-grad{
-  background:var(--grad);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;display:block;
-}
-.hero-line-dim{color:rgba(240,247,244,0.3);}
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
 
-.hero-sub{
-  margin-top:32px;font-size:18px;color:var(--light);
-  max-width:560px;line-height:1.7;
-}
-.hero-sub strong{color:var(--white);}
-.hero-sub .number{
-  color:var(--green);font-weight:700;font-family:'Syne',sans-serif;
-  font-size:20px;
-}
+  .nav-links a:hover { color: var(--text); }
 
-.hero-cta-row{margin-top:44px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
-.btn-main{
-  background:var(--grad);color:#09100F;
-  font-size:16px;font-weight:700;padding:16px 38px;
-  border-radius:6px;text-decoration:none;
-  transition:all .2s;display:inline-flex;align-items:center;gap:10px;
-  letter-spacing:0.02em;box-shadow:0 0 32px rgba(0,232,122,0.2);
-}
-.btn-main:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(0,232,122,0.35);}
-.btn-ghost{
-  color:var(--muted);font-size:14px;text-decoration:none;
-  transition:color .2s;display:inline-flex;align-items:center;gap:6px;
-}
-.btn-ghost:hover{color:var(--white);}
+  .nav-cta {
+    background: var(--accent);
+    color: #0b0b0b !important;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 500 !important;
+  }
 
-.hero-stats{
-  margin-top:72px;padding-top:40px;border-top:1px solid var(--line);
-  display:flex;gap:0;flex-wrap:wrap;
-}
-.hs{padding:0 48px 0 0;}
-.hs+.hs{padding-left:48px;border-left:1px solid var(--line);}
-.hs-num{
-  font-family:'Syne',sans-serif;font-size:52px;line-height:1;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.hs-num.w{-webkit-text-fill-color:var(--white);background:none;color:var(--white);}
-.hs-num.r{-webkit-text-fill-color:var(--red);background:none;color:var(--red);}
-.hs-label{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.45;max-width:130px;}
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
 
-/* ─── SECTION COMMON ─── */
-.section{padding:100px 48px;border-bottom:1px solid var(--line);}
-.section.alt{background:var(--navy);}
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 30%, rgba(255,222,89,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
-.s-label{
-  display:inline-flex;align-items:center;gap:10px;
-  font-family:'Syne',sans-serif;
-  font-size:11px;font-weight:700;letter-spacing:0.2em;
-  text-transform:uppercase;color:var(--green);margin-bottom:20px;
-}
-.s-label::before{content:'';width:28px;height:2px;background:var(--grad);display:block;}
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent-dim);
+    border: 1px solid rgba(255,222,89,0.2);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+  }
 
-.s-title{
-  font-family:'Syne',sans-serif;
-  font-size:clamp(40px,5.5vw,74px);
-  line-height:0.93;letter-spacing:-0.01em;color:var(--white);
-}
-.s-title .g{
-  background:var(--grad);-webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;background-clip:text;
-}
-.s-title .r{color:var(--red);}
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 7vw, 72px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    max-width: 800px;
+  }
 
-/* ─── PAIN SECTION ─── */
-.pain-math{
-  margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:3px;
-  border-radius:16px;overflow:hidden;
-}
-.pain-card{
-  background:var(--card);padding:52px 44px;position:relative;overflow:hidden;
-}
-.pain-card::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
-}
-.pain-card.left::after{background:linear-gradient(90deg,var(--red),transparent);}
-.pain-card.right::after{background:linear-gradient(90deg,rgba(255,255,255,0.08),transparent);}
-.pain-card .stat{
-  font-family:'Syne',sans-serif;font-size:96px;line-height:1;margin-bottom:8px;
-}
-.pain-card.left .stat{color:var(--red);}
-.pain-card.right .stat{color:rgba(255,255,255,0.07);}
-.pain-card-title{
-  font-family:'Syne',sans-serif;font-size:22px;font-weight:700;
-  color:var(--white);margin-bottom:12px;letter-spacing:-0.01em;
-}
-.pain-card-body{font-size:14px;color:var(--muted);line-height:1.7;max-width:320px;}
-.pain-card-body strong{color:var(--light);}
+  .hero h1 span { color: var(--accent); }
 
-.math-strip{
-  margin-top:3px;background:var(--card2);
-  padding:32px 44px;
-  display:flex;align-items:center;gap:20px;
-}
-.math-arrow{
-  font-family:'Syne',sans-serif;font-size:68px;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;flex-shrink:0;line-height:1;
-}
-.math-text{font-size:16px;color:var(--light);line-height:1.7;max-width:700px;}
-.math-text strong{color:var(--white);font-weight:600;}
-.math-text .highlight{
-  color:var(--green);font-family:'Syne',sans-serif;
-  font-size:18px;font-weight:700;
-}
+  .hero p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 48px;
+  }
 
-/* ─── OFFER STACK ─── */
-.offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px;}
-.offer-card{
-  background:var(--card);border:1px solid var(--line2);
-  border-radius:14px;padding:36px 32px;
-  position:relative;overflow:hidden;
-  transition:border-color .3s,transform .3s;
-}
-.offer-card:hover{border-color:rgba(0,232,122,0.3);transform:translateY(-4px);}
-.offer-card.featured::before{
-  content:'';position:absolute;inset:0;border-radius:14px;padding:1px;
-  background:var(--grad);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
-}
-.offer-num{
-  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
-  letter-spacing:0.15em;color:var(--muted);margin-bottom:20px;text-transform:uppercase;
-}
-.offer-icon{
-  width:48px;height:48px;border-radius:10px;
-  background:rgba(0,232,122,0.08);border:1px solid rgba(0,232,122,0.15);
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;margin-bottom:18px;
-}
-.offer-title{
-  font-family:'Syne',sans-serif;font-size:32px;letter-spacing:-0.01em;
-  color:var(--white);margin-bottom:10px;line-height:1;
-}
-.offer-sub{font-size:13px;color:var(--muted);margin-bottom:22px;}
-.offer-points{display:flex;flex-direction:column;gap:10px;}
-.op{
-  display:flex;align-items:flex-start;gap:10px;
-  font-size:14px;color:var(--light);line-height:1.5;
-}
-.op::before{
-  content:'→';flex-shrink:0;font-weight:700;margin-top:1px;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.offer-footer{
-  margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
-  font-size:12px;color:var(--muted);
-}
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
-/* ─── ROI CALCULATOR ─── */
-.roi-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px;align-items:start;}
-.roi-inputs{
-  background:var(--card);border:1px solid var(--line2);border-radius:14px;padding:36px;
-}
-.roi-field{margin-bottom:28px;}
-.roi-field:last-child{margin-bottom:0;}
-.roi-field-label{
-  display:flex;justify-content:space-between;align-items:center;
-  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
-  letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;
-}
-.roi-field-label .val{
-  color:var(--green);font-size:16px;font-weight:700;
-  font-family:'Syne',sans-serif;
-}
-input[type=range]{
-  width:100%;-webkit-appearance:none;appearance:none;
-  height:3px;border-radius:2px;outline:none;cursor:pointer;
-  background:linear-gradient(to right, var(--green) 0%, var(--green) var(--pct,30%), #172420 var(--pct,30%), #172420 100%);
-}
-input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
-  background:var(--grad);border:2px solid var(--bg);
-  box-shadow:0 0 10px rgba(0,232,122,0.5);cursor:pointer;transition:box-shadow .2s;
-}
-input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 18px rgba(0,232,122,0.7);}
-.roi-result{
-  background:var(--card);border:1px solid transparent;border-radius:14px;padding:36px;
-  background-clip:padding-box;position:relative;
-}
-.roi-result::before{
-  content:'';position:absolute;inset:0;border-radius:14px;padding:1px;
-  background:var(--grad);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
-}
-.roi-result-eyebrow{
-  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
-  letter-spacing:0.18em;text-transform:uppercase;color:var(--green);margin-bottom:14px;
-}
-.roi-big{
-  font-family:'Syne',sans-serif;font-size:82px;line-height:1;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;margin-bottom:6px;transition:all .3s;
-}
-.roi-desc{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.6;}
-.roi-rows{display:flex;flex-direction:column;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--line2);}
-.rr{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:13px 16px;background:var(--card2);border-bottom:1px solid var(--line);
-  font-size:13px;
-}
-.rr:last-child{border-bottom:none;}
-.rr-k{color:var(--muted);}
-.rr-v{color:var(--white);font-weight:700;font-family:'Syne',sans-serif;font-size:15px;}
-.rr-v.g{color:var(--green);}
-.roi-disclaimer{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6;}
-.roi-cta{
-  margin-top:22px;width:100%;padding:15px;background:var(--grad);
-  color:#09100F;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;
-  font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  box-shadow:0 0 24px rgba(0,232,122,0.2);
-}
-.roi-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,232,122,0.35);}
+  .btn-primary {
+    background: var(--accent);
+    color: #0b0b0b;
+    padding: 14px 32px;
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
 
-/* ─── VOICE AI ─── */
-.voice-wave{display:flex;align-items:center;gap:3px;height:20px;margin-top:14px;}
-.wave-bar{width:3px;border-radius:2px;background:linear-gradient(180deg,#00C9B1,#00E87A);animation:wavebar 1.2s ease-in-out infinite;}
-.wave-bar:nth-child(1){height:6px;animation-delay:0s;}
-.wave-bar:nth-child(2){height:14px;animation-delay:.1s;}
-.wave-bar:nth-child(3){height:20px;animation-delay:.2s;}
-.wave-bar:nth-child(4){height:12px;animation-delay:.3s;}
-.wave-bar:nth-child(5){height:18px;animation-delay:.4s;}
-.wave-bar:nth-child(6){height:8px;animation-delay:.5s;}
-.wave-bar:nth-child(7){height:16px;animation-delay:.3s;}
-.wave-bar:nth-child(8){height:10px;animation-delay:.2s;}
-@keyframes wavebar{0%,100%{transform:scaleY(0.3);opacity:.4;}50%{transform:scaleY(1);opacity:1;}}
+  .btn-primary:hover { opacity: 0.9; }
 
-#voice{padding:100px 48px;border-bottom:1px solid var(--line);background:var(--navy);position:relative;overflow:hidden;}
-#voice::before{content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 60% 70% at 100% 50%,rgba(0,201,177,0.1) 0%,transparent 60%),
-             radial-gradient(ellipse 40% 50% at 0% 50%,rgba(0,232,122,0.06) 0%,transparent 60%);}
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
 
-.voice-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-top:56px;align-items:start;}
-.voice-stat-row{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;}
-.vs-card{background:var(--card);border:1px solid var(--line2);border-radius:12px;padding:18px 22px;flex:1;min-width:85px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s;}
-.vs-card:hover{transform:translateY(-3px);border-color:rgba(0,201,177,0.3);}
-.vs-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(135deg,#00C9B1,#00E87A);}
-.vs-num{font-family:'Syne',sans-serif;font-size:42px;line-height:1;background:linear-gradient(135deg,#00C9B1,#00E87A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.vs-lbl{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.45;}
+  .btn-secondary:hover { border-color: var(--muted); }
 
-.voice-points{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
-.vp{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:var(--card);border:1px solid var(--line2);border-radius:12px;transition:border-color .25s,transform .25s;}
-.vp:hover{border-color:rgba(0,201,177,0.35);transform:translateX(4px);}
-.vp-icon{width:36px;height:36px;border-radius:8px;flex-shrink:0;background:rgba(0,201,177,0.1);border:1px solid rgba(0,201,177,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;}
-.vp-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:3px;}
-.vp-desc{font-size:12px;color:var(--muted);line-height:1.55;}
+  /* STATS BAR */
+  .stats {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    gap: 1px;
+  }
 
-.call-stack{display:flex;flex-direction:column;gap:10px;}
-.call-card{background:var(--card);border:1px solid var(--line2);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:all .3s;}
-.call-card.cc-active{
-  border:1px solid transparent;
-  background:linear-gradient(var(--card),var(--card)) padding-box,
-             linear-gradient(135deg,#00C9B1,#00E87A) border-box;
-  box-shadow:0 0 28px rgba(0,201,177,0.12);
-}
-.cc-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
-.cc-active .cc-avatar{background:linear-gradient(135deg,#00C9B1,#00E87A);}
-.call-card:not(.cc-active) .cc-avatar{background:#172420;}
-.cc-info{flex:1;min-width:0;}
-.cc-name{font-size:13px;font-weight:700;color:var(--white);}
-.cc-status{font-size:11px;margin-top:2px;}
-.cc-active .cc-status{color:#00C9B1;}
-.call-card:not(.cc-active) .cc-status{color:var(--muted);}
-.cc-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.cc-dur{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;}
-.cc-active .cc-dur{background:linear-gradient(135deg,#00C9B1,#00E87A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.call-card:not(.cc-active) .cc-dur{color:var(--muted);}
-.cc-wave{display:flex;align-items:center;gap:2px;height:16px;}
-.cc-wave .wave-bar{width:2px;}
+  .stat {
+    padding: 20px;
+  }
 
-.call-ai-badge{display:flex;align-items:center;gap:10px;background:rgba(0,201,177,0.07);border:1px solid rgba(0,201,177,0.2);border-radius:10px;padding:12px 16px;margin-top:6px;}
-.call-ai-dot{width:8px;height:8px;border-radius:50%;background:#00C9B1;animation:blink 1.4s infinite;flex-shrink:0;box-shadow:0 0 10px rgba(0,201,177,0.6);}
-.call-ai-badge span{font-size:13px;color:var(--light);line-height:1.4;}
-.call-ai-badge strong{color:var(--white);}
-.call-stack-foot{text-align:center;margin-top:10px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
-.call-stack-foot span{background:linear-gradient(135deg,#00C9B1,#00E87A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
 
-/* ─── FEATURE GRID ─── */
-.flow-visual{
-  display:flex;align-items:center;
-  margin-top:48px;padding:28px 36px;
-  background:var(--card2);border:1px solid var(--line2);border-radius:16px;
-  flex-wrap:wrap;justify-content:center;gap:8px;
-}
-.flow-step{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  padding:16px 20px;border-radius:12px;
-  background:var(--card);border:1px solid var(--line);
-  min-width:110px;text-align:center;
-}
-.flow-step.highlighted{
-  background:rgba(0,232,122,0.06);border-color:rgba(0,232,122,0.25);
-}
-.flow-icon{font-size:28px;}
-.flow-label{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--white);letter-spacing:-0.01em;}
-.flow-sub{font-size:11px;color:var(--muted);}
-.flow-arrow{
-  font-size:22px;color:var(--green);opacity:0.5;
-  flex-shrink:0;align-self:center;font-weight:700;
-}
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+  }
 
-.feat-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
-  margin-top:40px;
-}
-.feat-card{
-  background:var(--card);border:1px solid var(--line2);
-  border-radius:14px;padding:28px 24px;
-  transition:border-color .3s,transform .3s;
-  display:flex;flex-direction:column;gap:12px;
-  position:relative;overflow:hidden;
-}
-.feat-card:hover{border-color:rgba(0,232,122,0.3);transform:translateY(-4px);}
-.feat-card.feat-featured{background:rgba(0,232,122,0.04);}
-.feat-card.feat-featured::before{
-  content:'';position:absolute;inset:0;border-radius:14px;padding:1px;
-  background:var(--grad);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
-}
-.feat-icon-wrap{font-size:32px;}
-.feat-title{
-  font-family:'Syne',sans-serif;font-size:24px;
-  letter-spacing:-0.01em;color:var(--white);line-height:1;
-}
-.feat-body{font-size:13px;color:var(--light);line-height:1.65;flex:1;}
-.feat-tag{
-  display:inline-block;
-  background:rgba(0,232,122,0.08);border:1px solid rgba(0,232,122,0.18);
-  color:var(--green);font-size:11px;font-weight:700;
-  letter-spacing:0.1em;text-transform:uppercase;
-  padding:5px 12px;border-radius:4px;width:fit-content;
-}
+  /* SECTIONS */
+  section {
+    padding: 96px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
 
-/* ─── CONVERSATION PREVIEW ─── */
-.preview-tabs{
-  display:flex;gap:8px;margin-top:28px;
-  background:var(--card2);border:1px solid var(--line2);
-  border-radius:10px;padding:6px;width:fit-content;
-}
-.ptab{
-  background:none;border:none;color:var(--muted);
-  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;
-  padding:10px 22px;border-radius:7px;cursor:pointer;
-  transition:all .25s;letter-spacing:0.02em;
-}
-.ptab.active{background:var(--grad);color:#09100F;}
-.ptab:hover:not(.active){color:var(--white);}
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
 
-.scenario-bar{
-  display:flex;align-items:center;justify-content:space-between;gap:32px;
-  background:var(--card2);border:1px solid var(--line2);border-radius:12px;
-  padding:20px 28px;margin-top:20px;flex-wrap:wrap;
-}
-.scenario-bar.hidden{display:none;}
-.sb-left{flex:1;}
-.sb-label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
-.sb-title{font-size:14px;color:var(--light);line-height:1.6;max-width:500px;}
-.sb-right{display:flex;gap:24px;flex-shrink:0;}
-.sb-stat{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.sb-num{font-family:'Syne',sans-serif;font-size:30px;line-height:1;color:var(--white);}
-.sb-sub{font-size:11px;color:var(--muted);text-align:center;}
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
 
-.dual-comparison{
-  display:grid;grid-template-columns:1fr auto 1fr;gap:0;
-  margin-top:32px;align-items:start;
-}
-.compare-side{display:flex;flex-direction:column;gap:16px;}
-.side-header{border-radius:12px 12px 0 0;padding:18px 20px;}
-.manual-header{background:rgba(255,78,78,0.06);border:1px solid rgba(255,78,78,0.15);border-bottom:none;}
-.ai-header{
-  background:rgba(0,232,122,0.06);
-  border:1px solid transparent;background-clip:padding-box;
-  position:relative;border-radius:12px 12px 0 0;border-bottom:none;
-}
-.ai-header::before{
-  content:'';position:absolute;inset:0;border-radius:12px 12px 0 0;padding:1px;
-  background:var(--grad);
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;bottom:-1px;
-}
-.side-badge{font-size:12px;font-weight:700;letter-spacing:0.06em;margin-bottom:8px;}
-.manual-badge{color:var(--red);}
-.ai-badge{color:var(--green);}
-.side-sub{font-size:13px;color:var(--muted);line-height:1.55;}
-.side-sub.hidden{display:none;}
+  .section-sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 56px;
+  }
 
-.vs-divider{
-  display:flex;flex-direction:column;align-items:center;gap:12px;
-  padding:0 20px;padding-top:72px;
-}
-.vs-line{width:1px;height:120px;background:linear-gradient(to bottom,transparent,var(--line2),transparent);}
-.vs-text{font-family:'Syne',sans-serif;font-size:20px;letter-spacing:0.1em;color:var(--muted);}
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
 
-.phone-shell{
-  width:100%;background:var(--navy);border:2px solid var(--line2);
-  border-radius:28px;overflow:hidden;
-  box-shadow:0 16px 48px rgba(0,0,0,0.45),0 0 0 1px rgba(255,255,255,0.04);
-}
-.manual-phone{border-color:rgba(255,78,78,0.2);}
-.ai-phone{border:2px solid transparent;background-clip:padding-box;position:relative;}
-.ai-phone::before{content:'';position:absolute;inset:-2px;border-radius:30px;background:var(--grad);z-index:-1;}
-.phone-notch{
-  width:60px;height:18px;background:var(--navy);
-  border-radius:0 0 12px 12px;margin:0 auto;
-  position:relative;z-index:2;border:1.5px solid var(--line2);border-top:none;
-}
-.phone-screen{background:#ECE5DD;display:flex;flex-direction:column;height:420px;}
-.wa-header{background:#075E54;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.wa-back{color:white;font-size:20px;opacity:0.8;}
-.wa-avatar{
-  width:32px;height:32px;border-radius:50%;
-  background:linear-gradient(135deg,#00E87A,#00C9B1);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:#09100F;flex-shrink:0;
-}
-.wa-info{flex:1;}
-.wa-name{color:white;font-size:13px;font-weight:600;}
-.wa-status{color:rgba(255,255,255,0.65);font-size:10px;}
-.wa-messages{
-  flex:1;overflow-y:auto;padding:10px 8px;
-  display:flex;flex-direction:column;gap:6px;
-  background:#ECE5DD;scrollbar-width:none;
-}
-.wa-messages::-webkit-scrollbar{display:none;}
-.wa-msg{
-  max-width:84%;padding:7px 10px 5px;border-radius:8px;
-  font-size:11.5px;line-height:1.5;color:#111;
-  position:relative;word-break:break-word;
-}
-.wa-msg.out{background:#DCF8C6;align-self:flex-end;border-bottom-right-radius:2px;}
-.wa-msg.out::after{content:'';position:absolute;right:-6px;bottom:5px;border:5px solid transparent;border-left-color:#DCF8C6;border-right:0;}
-.wa-msg.in{background:white;align-self:flex-start;border-bottom-left-radius:2px;}
-.wa-msg.in::after{content:'';position:absolute;left:-6px;bottom:5px;border:5px solid transparent;border-right-color:white;border-left:0;}
-.wa-time{font-size:9.5px;color:#999;text-align:right;margin-top:2px;}
-.wa-tick{color:#4FC3F7;font-size:11px;}
-.wa-day-label{text-align:center;font-size:10px;color:#777;background:rgba(255,255,255,0.65);border-radius:10px;padding:2px 10px;align-self:center;margin:2px 0;}
-.wa-typing{background:white;align-self:flex-start;border-radius:8px;border-bottom-left-radius:2px;padding:8px 14px;display:flex;gap:4px;align-items:center;}
-.typing-dot{width:7px;height:7px;border-radius:50%;background:#aaa;animation:tdot 1.2s infinite;}
-.typing-dot:nth-child(2){animation-delay:.2s;}
-.typing-dot:nth-child(3){animation-delay:.4s;}
-@keyframes tdot{0%,60%,100%{opacity:.3;transform:scale(0.85);}30%{opacity:1;transform:scale(1);}}
-.wa-input-bar{background:#F0F0F0;padding:7px 10px;display:flex;align-items:center;gap:8px;flex-shrink:0;border-top:1px solid #ddd;}
-.wa-input-fake{flex:1;background:white;border-radius:20px;padding:6px 12px;font-size:11px;color:#999;}
-.wa-mic{font-size:16px;}
+  .about-content p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #aaa;
+    margin-bottom: 20px;
+  }
 
-.side-result{border-radius:0 0 12px 12px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start;}
-.manual-result{background:rgba(255,78,78,0.06);border:1px solid rgba(255,78,78,0.15);border-top:none;}
-.ai-result{background:rgba(0,232,122,0.06);border:1px solid rgba(0,232,122,0.2);border-top:none;}
-.side-result.hidden{display:none;}
-.result-icon{font-size:24px;flex-shrink:0;}
-.result-text{font-size:13px;line-height:1.6;}
-.manual-result .result-text{color:rgba(255,78,78,0.85);}
-.ai-result .result-text{color:rgba(0,232,122,0.9);}
+  .about-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-.example-disclaimer{
-  display:flex;align-items:flex-start;gap:14px;
-  background:rgba(0,232,122,0.06);border:1px solid rgba(0,232,122,0.18);
-  border-radius:12px;padding:16px 20px;margin-top:32px;max-width:680px;
-}
-.disc-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
-.disc-text{font-size:13px;color:var(--light);line-height:1.6;}
-.disc-text strong{color:var(--white);}
+  .highlight {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+  }
 
-/* ─── QUIZ ─── */
-#quiz{padding:100px 48px;}
-.quiz-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:48px;}
-.quiz-copy h2{font-family:'Syne',sans-serif;font-size:clamp(40px,5vw,60px);line-height:0.93;color:var(--white);margin-bottom:16px;}
-.quiz-copy h2 .g{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.quiz-copy p{font-size:15px;color:var(--muted);line-height:1.7;max-width:400px;}
-.quiz-bullets{margin-top:28px;display:flex;flex-direction:column;gap:14px;}
-.qb{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--light);line-height:1.5;}
-.qb-check{
-  width:20px;height:20px;border-radius:50%;flex-shrink:0;
-  background:rgba(0,232,122,0.1);border:1px solid rgba(0,232,122,0.3);
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:700;color:var(--green);margin-top:1px;
-}
-.quiz-box{background:var(--card);border:1px solid var(--line2);border-radius:14px;overflow:hidden;}
-.qprog{display:flex;gap:4px;padding:22px 26px 0;}
-.qp{flex:1;height:2px;background:#172420;border-radius:1px;transition:background .4s;}
-.qp.on{background:var(--grad);}
-.qstep{display:none;padding:26px;}
-.qstep.on{display:block;}
-.qstep-num{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.qstep-q{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:4px;letter-spacing:-0.01em;}
-.qstep-hint{font-size:13px;color:var(--muted);margin-bottom:20px;}
-.qopts{display:flex;flex-direction:column;gap:8px;}
-.qopt{
-  display:flex;align-items:center;gap:14px;padding:16px 18px;
-  background:var(--card2);border:1.5px solid var(--line);border-radius:10px;
-  cursor:pointer;transition:all .2s;
-}
-.qopt:hover,.qopt.sel{
-  border-color:transparent;
-  background:linear-gradient(var(--card2),var(--card2)) padding-box,var(--grad) border-box;
-}
-.qopt-icon{font-size:22px;flex-shrink:0;width:36px;text-align:center;}
-.qopt-title{font-size:15px;font-weight:600;color:var(--white);}
-.qopt-desc{font-size:12px;color:var(--muted);margin-top:2px;}
-.qfields{display:flex;flex-direction:column;gap:12px;margin-bottom:18px;}
-.qlabel{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;text-transform:uppercase;}
-.qinput{
-  width:100%;padding:12px 15px;background:var(--card2);
-  border:1.5px solid var(--line);border-radius:8px;
-  color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;
-  outline:none;transition:border-color .2s;
-}
-.qinput:focus{border-color:var(--green);}
-.qinput::placeholder{color:#3A4A5F;}
-.qinput.err{border-color:var(--red);}
-.qbtn{
-  width:100%;padding:14px;background:var(--grad);color:#09100F;border:none;
-  border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;
-  font-size:15px;transition:all .2s;letter-spacing:0.02em;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  box-shadow:0 0 20px rgba(0,232,122,0.15);
-}
-.qbtn:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(0,232,122,0.3);}
-.qbtn:disabled{background:#172420;color:#3A4A5F;cursor:not-allowed;box-shadow:none;}
-.qback{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:12px;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;transition:color .2s;padding:0;}
-.qback:hover{color:var(--white);}
-.confirm-card{background:rgba(0,232,122,0.05);border:1px solid rgba(0,232,122,0.2);border-radius:10px;padding:16px 20px;margin-bottom:18px;}
-.confirm-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-.confirm-head-title{font-size:14px;font-weight:600;color:var(--white);}
-.confirm-head-sub{font-size:11px;color:var(--muted);}
-.confirm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.cf{background:rgba(255,255,255,0.04);border-radius:8px;padding:9px 12px;}
-.cf-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;}
-.cf-val{font-size:13px;font-weight:600;color:var(--white);}
-.cal-wrap{background:white;border-radius:10px;overflow:hidden;}
+  .highlight h4 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
 
-/* ─── FOOTER ─── */
-footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-footer p{font-size:12px;color:var(--muted);}
+  .highlight p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
 
-/* spin */
-.spin{width:15px;height:15px;border:2px solid rgba(9,16,15,0.3);border-top-color:#09100F;border-radius:50%;animation:sp .7s linear infinite;display:inline-block;}
-@keyframes sp{to{transform:rotate(360deg);}}
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
 
-/* ─── REVEAL ─── */
-.rev{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease;}
-.rev.v{opacity:1;transform:none;}
-.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}.d4{transition-delay:.32s;}
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    transition: border-color 0.2s;
+  }
 
-/* ─── RESPONSIVE ─── */
-@media(max-width:900px){
-  nav{padding:14px 20px;}
-  .nav-link{display:none;}
-  #hero,.section,#quiz,#voice{padding-left:20px;padding-right:20px;}
-  h1.hero-h{font-size:52px;}
-  .pain-math,.feat-grid,.roi-layout,.quiz-layout,.dual-comparison{grid-template-columns:1fr;}
-  .hero-stats{flex-wrap:wrap;gap:20px;}
-  .hs{padding:0 24px 0 0;}
-  .hs+.hs{padding-left:24px;}
-  footer{flex-direction:column;text-align:center;}
-  .voice-grid{grid-template-columns:1fr;gap:40px;}
-  .vs-divider{flex-direction:row;padding:0;}
-  .vs-line{width:60px;height:1px;}
-}
+  .service-card:hover { border-color: rgba(255,222,89,0.3); }
+
+  .service-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-dim);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .step {
+    text-align: center;
+    position: relative;
+  }
+
+  .step-num {
+    width: 56px;
+    height: 56px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step h4 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .step p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* WHY SOLAR */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .why-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .why-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .why-card h4 {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .why-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CONTACT / OPT-IN */
+  .contact-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .contact-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .contact-info p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .contact-detail span:first-child {
+    color: var(--accent);
+    font-size: 16px;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 16px; }
+
+  .form-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .form-group input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus { border-color: var(--accent); }
+  .form-group input::placeholder { color: #555; }
+
+  .consent-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin: 8px 0;
+  }
+
+  .consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .consent-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    margin-top: 2px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .consent-text {
+    font-size: 11px;
+    line-height: 1.6;
+    color: #888;
+  }
+
+  .sms-disclosure {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.5;
+    margin-top: 12px;
+  }
+
+  .sms-disclosure a { color: #777; text-decoration: none; }
+  .sms-disclosure a:hover { color: var(--accent); }
+
+  .btn-submit {
+    width: 100%;
+    background: var(--accent);
+    color: #0b0b0b;
+    border: none;
+    border-radius: var(--radius);
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.2s;
+  }
+
+  .btn-submit:hover { opacity: 0.9; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .footer-info {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.7;
+    text-align: center;
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: #666;
+    text-decoration: none;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* DIVIDER */
+  .full-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    nav .nav-links { display: none; }
+    section { padding: 64px 20px; }
+    .about-grid, .services-grid, .steps, .why-grid, .contact-section { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr; }
+    .steps::before { display: none; }
+    .contact-section { padding: 32px; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-info { order: 3; }
+  }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="karvina-logo">
-    <!-- Karvina Logo Mark SVG -->
-    <svg class="karvina-logo-mark" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#00E87A"/>
-          <stop offset="100%" stop-color="#00C9B1"/>
-        </linearGradient>
-        <linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#00C9B1"/>
-          <stop offset="100%" stop-color="#00E87A"/>
-        </linearGradient>
-      </defs>
-      <!-- Hexagon outer -->
-      <path d="M19 2L34.5 11V27L19 36L3.5 27V11L19 2Z" stroke="url(#lg1)" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <!-- K letter inside -->
-      <path d="M13 11V27M13 19L22 11M13 19L22 27" stroke="url(#lg1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <!-- solar dot accent -->
-      <circle cx="26" cy="12" r="2.5" fill="url(#lg2)" opacity="0.8"/>
-    </svg>
-    <div class="karvina-logo-text">
-      <span class="karvina-logo-name">Karvina</span>
-      <span class="karvina-logo-sub">Ventures LLC</span>
-    </div>
-  </a>
-  <div class="nav-right">
-    <a class="nav-link" href="#how">How It Works</a>
-    <a class="nav-link" href="#roi">ROI Calculator</a>
-    <a class="nav-cta" href="#quiz">Book a Call →</a>
+  <a class="nav-logo" href="#home">Karvina Ventures</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="#contact">Contact Us</a>
+    <a href="#contact" class="nav-cta">Request Solar Consultation</a>
   </div>
 </nav>
 
-<!-- ─── HERO ─── -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-
-  <div class="hero-eyebrow rev"><div class="eyebrow-dot"></div> AI Sales Automation for US Solar Companies</div>
-
-  <h1 class="hero-h rev d1">
-    <span class="hero-line-white">More appointments.</span>
-    <span class="hero-line-grad">More commissions.</span>
-    <span class="hero-line-dim">Same team. Less chaos.</span>
-  </h1>
-
-  <p class="hero-sub rev d2">
-    An AI that responds in <strong>8 seconds</strong>, works your dead database, and fills your calendar —
-    so your reps walk into meetings that were already sold before they dialed.
-  </p>
-
-  <div class="hero-cta-row rev d3">
-    <a href="#quiz" class="btn-main">See What's In My Database →</a>
-    <a href="#how" class="btn-ghost">See how it works <span>↓</span></a>
-  </div>
-
-  <div class="hero-stats rev d4">
-    <div class="hs">
-      <div class="hs-num r">78%</div>
-      <div class="hs-label">of leads never get a response in time — that's your opportunity</div>
-    </div>
-    <div class="hs">
-      <div class="hs-num">8 sec</div>
-      <div class="hs-label">AI response time</div>
-    </div>
-    <div class="hs">
-      <div class="hs-num w">24/7</div>
-      <div class="hs-label">your AI works while your team sleeps</div>
-    </div>
-    <div class="hs">
-      <div class="hs-num">$8K+</div>
-      <div class="hs-label">average commission per closed solar deal</div>
-    </div>
-    <div class="hs">
-      <div class="hs-num">200+</div>
-      <div class="hs-label">WhatsApp messages sent per day, per number</div>
+<!-- HERO -->
+<div id="home" class="hero">
+  <div>
+    <div class="hero-badge">Wyoming Solar Dealer</div>
+    <h1>Power Your Home with <span>Clean Energy</span></h1>
+    <p>Karvina Ventures helps homeowners go solar — generate clean energy at home and reduce dependence on the grid.</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">Request Solar Consultation</a>
+      <a href="#how-it-works" class="btn-secondary">See How It Works</a>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ─── PAIN ─── -->
-<section id="pain" class="section alt">
-  <div class="rev"><div class="s-label">The Opportunity</div></div>
-  <div class="s-title rev d1">Two revenue streams<br><span class="g">waiting for you.</span></div>
+<!-- STATS REMOVED -->
 
-  <div class="pain-math rev d2">
-    <div class="pain-card left">
-      <div class="stat">78%</div>
-      <div class="pain-card-title">The rep that never sleeps.</div>
-      <div class="pain-card-body">A lead who fills your form on a Sunday at 9pm has a 5-minute window. <strong>The AI is already in their phone before they scroll away.</strong></div>
-    </div>
-    <div class="pain-card right">
-      <div class="stat" style="font-size:56px;line-height:1.1;color:rgba(255,255,255,0.06);">THOU-<br>SANDS<br>OF<br>LEADS</div>
-      <div class="pain-card-title">Your database = a list of warm prospects sitting untouched.</div>
-      <div class="pain-card-body">Facebook Ads, D2D, referrals — they all said yes to a conversation. <strong>They just never had it.</strong></div>
-    </div>
-  </div>
+<hr class="full-divider">
 
-  <div class="math-strip rev d3">
-    <div class="math-arrow">→</div>
-    <div class="math-text">
-      <strong>5,000 dormant leads</strong> × <strong>2% reactivation</strong> × <strong>25% close rate</strong> × <strong>$8,000 commission</strong> =
-      <span class="highlight">$2,000,000 sitting in your database right now.</span>
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-content">
+      <div class="section-label">About Us</div>
+      <h2 class="section-title">Wyoming-Based. Family-Focused. Solar-First.</h2>
+      <p>Karvina Ventures LLC is a solar company based in Sheridan, Wyoming. We specialize in helping homeowners across the US access the economic and environmental benefits of residential solar energy.</p>
+      <p>We work exclusively through digital channels — no door-to-door pressure, no high-pressure sales tactics. Our inquiries come directly from homeowners who want to learn more, and we connect them with trusted installation partners who deliver quality results.</p>
+      <p>Our mission is simple: make solar accessible, transparent, and worth it for every family we work with.</p>
     </div>
-  </div>
-</section>
-
-<!-- ─── SYSTEMS ─── -->
-<section id="how" class="section">
-  <div class="rev"><div class="s-label">Built For Solar Teams</div></div>
-  <div class="s-title rev d1">One system.<br><span class="g">Full pipeline covered.</span></div>
-
-  <div class="flow-visual rev d2">
-    <div class="flow-step">
-      <div class="flow-icon">📲</div>
-      <div class="flow-label">Lead Writes In</div>
-      <div class="flow-sub">WhatsApp / FB Ads</div>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">🤖</div>
-      <div class="flow-label">AI Responds</div>
-      <div class="flow-sub">in 8 seconds</div>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">✅</div>
-      <div class="flow-label">Qualifies</div>
-      <div class="flow-sub">Roof · Bill · State</div>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step highlighted">
-      <div class="flow-icon">📅</div>
-      <div class="flow-label">Books Appointment</div>
-      <div class="flow-sub">Google Calendar</div>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step highlighted">
-      <div class="flow-icon">🏆</div>
-      <div class="flow-label">Your Rep Closes</div>
-      <div class="flow-sub">$8K commission</div>
-    </div>
-  </div>
-
-  <div class="feat-grid rev d3">
-    <div class="feat-card">
-      <div class="feat-icon-wrap">📲</div>
-      <div class="feat-title">Inbound AI</div>
-      <div class="feat-body">Every lead gets a response in 8 seconds. Qualified, handled, booked — before your rep even sees the notification.</div>
-      <div class="feat-tag">Always On</div>
-    </div>
-
-    <div class="feat-card feat-featured">
-      <div class="feat-icon-wrap">🔄</div>
-      <div class="feat-title">Reactivation</div>
-      <div class="feat-body">1-to-1 personalized messages to every dormant contact. Sounds human. Scales to 200+ messages a day.</div>
-      <div class="feat-tag">1,000–200,000 leads</div>
-      <div class="feat-tag" style="margin-top:6px;background:rgba(0,201,177,0.08);border-color:rgba(0,201,177,0.2);color:#00C9B1;">200+ messages/day</div>
-    </div>
-
-    <div class="feat-card">
-      <div class="feat-icon-wrap">🔔</div>
-      <div class="feat-title">Appointment Reminders</div>
-      <div class="feat-body">The prospect gets a reminder before the call. They show up. Your close rate climbs.</div>
-      <div class="feat-tag">Fewer No-Shows</div>
-    </div>
-
-    <div class="feat-card">
-      <div class="feat-icon-wrap">📣</div>
-      <div class="feat-title">Team Notifications</div>
-      <div class="feat-body">Appointment booked → rep notified instantly. No missed appointments. No Monday surprises.</div>
-      <div class="feat-tag">Instant Alerts</div>
-    </div>
-
-    <div class="feat-card">
-      <div class="feat-icon-wrap">⚡</div>
-      <div class="feat-title">FB Lead Distribution</div>
-      <div class="feat-body">Facebook Ads leads route directly to your setters the moment they arrive. No spreadsheets, no group chats.</div>
-      <div class="feat-tag">Auto-Distribution</div>
-    </div>
-
-    <div class="feat-card">
-      <div class="feat-icon-wrap">🛠️</div>
-      <div class="feat-title">Custom CRM</div>
-      <div class="feat-body">Your pipeline, your roles, your commission logic — built from scratch around how you actually operate.</div>
-      <div class="feat-tag">Made For You</div>
-    </div>
-
-    <div class="feat-card" style="border-color:rgba(0,201,177,0.2);position:relative;overflow:hidden;">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(135deg,#00C9B1,#00E87A);"></div>
-      <div class="feat-icon-wrap">📞</div>
-      <div class="feat-title" style="background:linear-gradient(135deg,#00C9B1,#00E87A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Voice AI</div>
-      <div class="feat-body">AI answers in &lt;2 seconds, qualifies the lead and books the appointment — while your team sleeps or is on another call.</div>
-      <div class="feat-tag" style="background:rgba(0,201,177,0.08);border-color:rgba(0,201,177,0.25);color:#00C9B1;">5 simultaneous calls</div>
-      <div class="voice-wave" style="margin-top:16px;">
-        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="about-highlights">
+      <div class="highlight">
+        <h4>No Door-to-Door Sales</h4>
+        <p>We generate all our inquiries through digital marketing. You come to us — not the other way around.</p>
+      </div>
+      <div class="highlight">
+        <h4>Trusted Installation Partners</h4>
+        <p>We work with vetted, licensed solar installers across the US to ensure quality on every project.</p>
+      </div>
+      <div class="highlight">
+        <h4>Transparent Process</h4>
+        <p>No hidden fees, no confusing contracts. We walk you through every step from consultation to installation.</p>
+      </div>
+      <div class="highlight">
+        <h4>Florida Specialists</h4>
+        <p>We know the local utility landscape, incentive programs, and what it takes to maximize your solar ROI.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── PREVIEW ─── -->
-<section class="section alt" id="preview">
-  <div class="rev"><div class="s-label">See It In Action</div></div>
-  <div class="s-title rev d1">Manual vs AI.<br><span class="g">Same leads. Different outcome.</span></div>
+<hr class="full-divider">
 
-  <div class="example-disclaimer rev d2">
-    <div class="disc-icon">💡</div>
-    <div class="disc-text">
-      <strong>Example conversations</strong> — so you can see exactly how it works before we talk.
-    </div>
-  </div>
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What We Offer</div>
+  <h2 class="section-title">Our Services</h2>
+  <p class="section-sub">We handle everything from your initial consultation through installation coordination, making the solar process simple and stress-free.</p>
 
-  <div class="preview-tabs rev d3">
-    <button class="ptab active" onclick="switchScenario('reactivation',this)">🔄 Reactivation System</button>
-    <button class="ptab" onclick="switchScenario('inbound',this)">📲 Inbound System</button>
-  </div>
-
-  <div class="scenario-bar rev d4" id="scenario-bar-reactivation">
-    <div class="sb-left">
-      <div class="sb-label">📋 Scenario</div>
-      <div class="sb-title">3,000 leads in your CRM. Door-knocking, Facebook Ads. 3–12 months old. Zero follow-up.</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">☀️</div>
+      <h3>Free Solar Consultation</h3>
+      <p>Our specialists assess your home's solar potential, review your utility bills, and provide a custom savings estimate — at no cost to you.</p>
     </div>
-    <div class="sb-right">
-      <div class="sb-stat"><span class="sb-num">3,000</span><span class="sb-sub">old leads</span></div>
-      <div class="sb-stat"><span class="sb-num" style="color:var(--red)">$0</span><span class="sb-sub">revenue so far</span></div>
-      <div class="sb-stat"><span class="sb-num" style="color:var(--green)">60+</span><span class="sb-sub">potential appts</span></div>
+    <div class="service-card">
+      <div class="service-icon">📋</div>
+      <h3>System Design & Proposal</h3>
+      <p>We design a solar system sized for your home's energy needs and present a clear proposal showing projected results and timeline.</p>
     </div>
-  </div>
-
-  <div class="scenario-bar hidden rev d4" id="scenario-bar-inbound">
-    <div class="sb-left">
-      <div class="sb-label">📋 Scenario</div>
-      <div class="sb-title">Saturday 9pm. A Facebook lead texts your WhatsApp. Your rep is off. Without AI — silence until Monday.</div>
+    <div class="service-card">
+      <div class="service-icon">🔧</div>
+      <h3>Installation Coordination</h3>
+      <p>We connect you with our network of licensed solar installers who handle permits, installation, and utility interconnection.</p>
     </div>
-    <div class="sb-right">
-      <div class="sb-stat"><span class="sb-num" style="color:var(--red)">9 PM</span><span class="sb-sub">Saturday</span></div>
-      <div class="sb-stat"><span class="sb-num" style="color:var(--red)">0</span><span class="sb-sub">reps available</span></div>
-      <div class="sb-stat"><span class="sb-num" style="color:var(--green)">8 sec</span><span class="sb-sub">AI responds</span></div>
+    <div class="service-card">
+      <div class="service-icon">💰</div>
+      <h3>Energy Plan Guidance</h3>
+      <p>We help you navigate solar plan options including plans with no upfront cost, leases, and power purchase agreements to find what fits your budget.</p>
     </div>
-  </div>
-
-  <div class="dual-comparison rev">
-    <div class="compare-side manual-side">
-      <div class="side-header manual-header">
-        <div class="side-badge manual-badge">❌ Without AI — Manual</div>
-        <div class="side-sub" id="manual-sub-reactivation">Open CRM. Find lead. Remember context. Write message. Send. Repeat 2,999 times.</div>
-        <div class="side-sub hidden" id="manual-sub-inbound">Rep sees it Monday. Lead bought from a competitor Saturday night.</div>
-      </div>
-      <div class="phone-shell manual-phone">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="wa-header" style="background:#555;">
-            <div class="wa-back">‹</div>
-            <div class="wa-avatar" style="background:#777;">👤</div>
-            <div class="wa-info">
-              <div class="wa-name" id="manual-chat-name">James Mitchell</div>
-              <div class="wa-status" style="color:rgba(255,255,255,0.5);">Your rep's phone</div>
-            </div>
-          </div>
-          <div class="wa-messages" id="wa-manual" style="background:#f5f5f5;"></div>
-          <div class="wa-input-bar">
-            <div class="wa-input-fake">Type a message</div>
-            <div class="wa-mic">🎤</div>
-          </div>
-        </div>
-      </div>
-      <div class="side-result manual-result" id="manual-result-reactivation">
-        <div class="result-icon">😩</div>
-        <div class="result-text">Your rep spent hours copying messages. Half were forgotten. Leads went cold. The "did we follow up?" anxiety never goes away.</div>
-      </div>
-      <div class="side-result manual-result hidden" id="manual-result-inbound">
-        <div class="result-icon">📵</div>
-        <div class="result-text">The lead moved on. Your rep never knew. No drama — just a silent opportunity that walked while everyone was off.</div>
-      </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>Benefits Optimization</h3>
+      <p>We ensure you capture every available benefit from Wyoming's solar programs, net metering, and utility incentives available to homeowners.</p>
     </div>
-
-    <div class="vs-divider">
-      <div class="vs-line"></div>
-      <div class="vs-text">VS</div>
-      <div class="vs-line"></div>
-    </div>
-
-    <div class="compare-side ai-side">
-      <div class="side-header ai-header">
-        <div class="side-badge ai-badge">✅ With Karvina AI</div>
-        <div class="side-sub" id="ai-sub-reactivation">The AI contacts all 3,000 leads. Personally. Automatically. Tonight.</div>
-        <div class="side-sub hidden" id="ai-sub-inbound">AI responds in 8 seconds. Lead qualified. Appointment booked. Rep wakes up to a full calendar.</div>
-      </div>
-      <div class="phone-shell ai-phone">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="wa-header">
-            <div class="wa-back">‹</div>
-            <div class="wa-avatar">KV</div>
-            <div class="wa-info">
-              <div class="wa-name" id="ai-chat-name">James Mitchell</div>
-              <div class="wa-status">online</div>
-            </div>
-          </div>
-          <div class="wa-messages" id="wa-ai"></div>
-          <div class="wa-input-bar">
-            <div class="wa-input-fake">Type a message</div>
-            <div class="wa-mic">🎤</div>
-          </div>
-        </div>
-      </div>
-      <div class="side-result ai-result" id="ai-result-reactivation">
-        <div class="result-icon">🏆</div>
-        <div class="result-text">Every lead had a real conversation. Zero anxiety. Zero forgotten contacts. Meetings appear on their own — your team just shows up and closes.</div>
-      </div>
-      <div class="side-result ai-result hidden" id="ai-result-inbound">
-        <div class="result-icon">🗓️</div>
-        <div class="result-text">Meeting secured at 9:07pm Saturday. Rep woke up to a booked calendar, zero effort. The system handled the whole thing while everyone slept.</div>
-      </div>
+    <div class="service-card">
+      <div class="service-icon">🤝</div>
+      <h3>Post-Install Support</h3>
+      <p>After your system is live, our team remains available to answer questions and help you track your energy production and results.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── VOICE AI ─── -->
-<section id="voice">
-  <div class="rev"><div class="s-label">Third System</div></div>
-  <div class="s-title rev d1" style="margin-top:12px;">Your phone never<br><span class="g">goes to voicemail.</span></div>
-  <p class="rev d2" style="font-size:17px;color:var(--light);margin-top:20px;max-width:600px;line-height:1.8;">
-    Your Facebook Ads have a <strong style="color:var(--white);">"Call Now"</strong> button — that number goes straight to the AI.<br>
-    Lead calls, <strong style="color:var(--white);">AI answers in under 2 seconds</strong>, qualifies them and books in your Google Calendar.<br>
-    If they're ready to talk to someone now, it does a <strong style="color:var(--white);">live transfer</strong> to your rep instantly.<br>
-    <span style="color:var(--muted);font-size:15px;">No hold. No voicemail. No leads lost at 9pm on a Sunday.</span>
-  </p>
+<hr class="full-divider">
 
-  <div class="voice-grid rev d3">
-    <div>
-      <div class="voice-stat-row">
-        <div class="vs-card"><div class="vs-num">&lt;2s</div><div class="vs-lbl">answers on the first ring</div></div>
-        <div class="vs-card"><div class="vs-num">∞</div><div class="vs-lbl">simultaneous calls</div></div>
-        <div class="vs-card"><div class="vs-num">24/7</div><div class="vs-lbl">weekends and holidays</div></div>
-      </div>
-      <div class="voice-points">
-        <div class="vp">
-          <div class="vp-icon">🎙️</div>
-          <div><div class="vp-title">Sounds like a real person</div><div class="vp-desc">Natural voice, pauses, confirmations — the lead doesn't know it's AI unless they ask.</div></div>
-        </div>
-        <div class="vp">
-          <div class="vp-icon">📞</div>
-          <div><div class="vp-title">5 calls at once, all answered</div><div class="vp-desc">Your team can't be on 5 simultaneous calls. The AI can. Zero hold, zero missed opportunity.</div></div>
-        </div>
-        <div class="vp">
-          <div class="vp-icon">📅</div>
-          <div><div class="vp-title">Books in Google Calendar on the same call</div><div class="vp-desc">Asks availability, picks a slot and confirms the appointment — all before they hang up.</div></div>
-        </div>
-        <div class="vp">
-          <div class="vp-icon">🔍</div>
-          <div><div class="vp-title">Qualifies before passing to the rep</div><div class="vp-desc">Homeowner status, electric bill, state — AI filters and qualifies. Your rep enters the meeting, not the cold call.</div></div>
-        </div>
-      </div>
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div style="text-align: center; margin-bottom: 64px;">
+    <div class="section-label">The Process</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub" style="margin: 0 auto;">Residential solar is simpler than most people think. Here's how a home solar system actually works.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Sunlight Hits the Panels</h4>
+      <p>Photovoltaic (PV) solar panels on your roof absorb sunlight and convert it into direct current (DC) electricity throughout the day.</p>
     </div>
-
-    <div>
-      <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Active calls right now</div>
-      <div class="call-stack">
-        <div class="call-card cc-active">
-          <div class="cc-avatar">👤</div>
-          <div class="cc-info">
-            <div class="cc-name">Ryan Thompson</div>
-            <div class="cc-status">● Qualifying — $340/mo electric bill</div>
-          </div>
-          <div class="cc-right">
-            <div class="cc-dur">2:14</div>
-            <div class="cc-wave"><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div></div>
-          </div>
-        </div>
-        <div class="call-card cc-active">
-          <div class="cc-avatar">👤</div>
-          <div class="cc-info">
-            <div class="cc-name">Sarah Jenkins</div>
-            <div class="cc-status">● Booking appointment — Thu 10am</div>
-          </div>
-          <div class="cc-right">
-            <div class="cc-dur">1:47</div>
-            <div class="cc-wave"><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div></div>
-          </div>
-        </div>
-        <div class="call-card cc-active">
-          <div class="cc-avatar">👤</div>
-          <div class="cc-info">
-            <div class="cc-name">Mike Okafor</div>
-            <div class="cc-status">● Verifying homeownership</div>
-          </div>
-          <div class="cc-right">
-            <div class="cc-dur">0:53</div>
-            <div class="cc-wave"><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div></div>
-          </div>
-        </div>
-        <div class="call-card" style="opacity:0.5;">
-          <div class="cc-avatar">👤</div>
-          <div class="cc-info"><div class="cc-name">Linda Barros</div><div class="cc-status">Connecting...</div></div>
-          <div class="cc-right"><div class="cc-dur">0:08</div></div>
-        </div>
-        <div class="call-card" style="opacity:0.28;">
-          <div class="cc-avatar">👤</div>
-          <div class="cc-info"><div class="cc-name">David Park</div><div class="cc-status">Connecting...</div></div>
-          <div class="cc-right"><div class="cc-dur">0:02</div></div>
-        </div>
-        <div class="call-ai-badge">
-          <div class="call-ai-dot"></div>
-          <span><strong>AI handles all of them.</strong> Your team doesn't touch the phone.</span>
-        </div>
-        <div class="call-stack-foot"><span>5 simultaneous calls · same moment · same number</span></div>
-      </div>
-      <div class="voice-wave" style="justify-content:center;margin-top:24px;">
-        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-      </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>Inverter Converts the Power</h4>
+      <p>An inverter transforms the DC electricity into alternating current (AC) power — the same type of electricity your home already uses.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>Your Home Uses Clean Energy</h4>
+      <p>The converted energy flows directly into your home's electrical panel, powering your appliances, lighting, and devices with clean solar energy.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>Excess Goes Back to the Grid</h4>
+      <p>Any energy your panels produce beyond what your home needs is sent back to the utility grid through net metering, further reducing your monthly bill.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── ROI CALCULATOR ─── -->
-<section id="roi" class="section alt">
-  <div class="rev"><div class="s-label">ROI Calculator</div></div>
-  <div class="s-title rev d1">Calculate your<br><span class="g">potential.</span></div>
-  <p class="rev d2" style="font-size:15px;color:var(--muted);margin-top:14px;max-width:480px;line-height:1.7;">Your database already has the answer. Move the sliders and watch it reveal itself.</p>
+<hr class="full-divider">
 
-  <div class="roi-layout rev d3">
-    <div class="roi-inputs">
-      <div class="roi-field">
-        <div class="roi-field-label">Leads in your database <span class="val" id="lbl-leads">5,000</span></div>
-        <input type="range" min="500" max="100000" step="500" value="5000" id="sl-leads" oninput="calcROI(this)">
-      </div>
-      <div class="roi-field" style="margin-top:28px;">
-        <div class="roi-field-label">Average commission per deal <span class="val" id="lbl-deal">$8,000</span></div>
-        <input type="range" min="1000" max="20000" step="500" value="8000" id="sl-deal" oninput="calcROI(this)">
-      </div>
-      <div class="roi-field" style="margin-top:28px;">
-        <div class="roi-field-label">Your team's close rate <span class="val" id="lbl-close">25%</span></div>
-        <input type="range" min="5" max="60" step="5" value="25" id="sl-close" oninput="calcROI(this)">
-      </div>
-      <div class="roi-field" style="margin-top:28px;">
-        <div class="roi-field-label">Reactivation response rate <span class="val" id="lbl-react">2%</span></div>
-        <input type="range" min="1" max="8" step="0.5" value="2" id="sl-react" oninput="calcROI(this)">
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;">
-          <span>Conservative (1%)</span><span>Realistic (2–4%)</span>
-        </div>
-      </div>
-      <div style="margin-top:36px;padding-top:24px;border-top:1px solid var(--line);">
-        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">The math is simple</div>
-        <div style="font-size:14px;color:var(--light);line-height:2;">
-          <span id="math-leads">5,000</span> leads × <span id="math-react">2%</span> reactivation rate<br>
-          = <span style="color:var(--green);font-weight:600;" id="math-reacted">100</span> respond<br>
-          × <span id="math-close">25%</span> close rate = <span style="color:var(--green);font-weight:600;" id="math-closed">25</span> clients<br>
-          × $<span id="math-deal">8,000</span> commission = <span style="font-family:'Syne',sans-serif;font-size:22px;color:var(--green);" id="math-total">$2,000,000</span>
-        </div>
+<!-- WHY SOLAR -->
+<section>
+  <div class="section-label">Why Solar</div>
+  <h2 class="section-title">Why Homeowners Choose Solar</h2>
+  <p class="section-sub">Wyoming's sunshine makes it one of the best states in the country for solar. Here's why now is the right time.</p>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">☀️</div>
+      <div>
+        <h4>Florida Gets More Sun</h4>
+        <p>Wyoming enjoys abundant sunny days per year — one of the highest in the country. More sun means more clean energy produced for your home every single day.</p>
       </div>
     </div>
-
-    <div class="roi-result">
-      <div class="roi-result-eyebrow">Estimated Potential In Your Database</div>
-      <div class="roi-big" id="roi-revenue">$2M</div>
-      <div class="roi-desc" id="roi-sub">In commissions from contacts already in your database.</div>
-      <div class="roi-rows">
-        <div class="rr"><span class="rr-k">Leads in database</span><span class="rr-v" id="rb-leads">5,000</span></div>
-        <div class="rr"><span class="rr-k">Respond to AI</span><span class="rr-v g" id="rb-react">100</span></div>
-        <div class="rr"><span class="rr-k">Close as clients</span><span class="rr-v g" id="rb-close">25</span></div>
-        <div class="rr"><span class="rr-k">Generated revenue</span><span class="rr-v g" id="rb-rev">$200,000</span></div>
+    <div class="why-card">
+      <div class="why-icon">⚡</div>
+      <div>
+        <h4>Reduce Your Monthly Energy Use</h4>
+        <p>A properly sized residential solar system can cover a significant portion of your home's electricity needs, reducing how much you draw from the grid each month.</p>
       </div>
-      <p class="roi-disclaimer">*Based on real solar reactivation campaigns. Results vary based on list quality and market.</p>
-      <button class="roi-cta" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">
-        Show Me How → Book a Call
-      </button>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🏠</div>
+      <div>
+        <h4>Long-Term Home Improvement</h4>
+        <p>Solar panels are a durable, long-lasting addition to your home. Most residential systems continue producing clean energy for 25 years or more.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🌿</div>
+      <div>
+        <h4>Clean Energy for Your Family</h4>
+        <p>A typical residential solar system offsets over 100,000 lbs of carbon dioxide over its lifetime — equivalent to planting thousands of trees for future generations.</p>
+      </div>
+    </div>
+  </div>
+
+<hr class="full-divider">
+
+<!-- CONTACT SECTION - FORM ONLY -->
+<section id="contact">
+  <div style="max-width: 800px; margin: 0 auto; padding: 0 40px;">
+    <div style="text-align: center; margin-bottom: 48px;">
+      <div class="section-label">Contact Us</div>
+      <h2 class="section-title">Request Solar Consultation</h2>
+      <p style="font-size: 15px; color: var(--muted); max-width: 500px; margin: 0 auto;">Fill out the form below and our team will reach out to discuss how residential solar works for your home.</p>
+    </div>
+
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px;">
+      <div class="contact-detail">
+        <span>📍</span>
+        <span>30 N Gould St Ste R, Sheridan, WY 82801</span>
+      </div>
+      <div class="contact-detail">
+        <span>📞</span>
+        <span>+1 (407) 913-3220</span>
+      </div>
+      <div class="contact-detail" style="margin-bottom: 28px;">
+        <span>✉️</span>
+        <span>info@karvinaventures.com</span>
+      </div>
+      <iframe src="https://api.leadconnectorhq.com/widget/form/4sU8kMLJfFuto6BRml1J" style="width:100%;border:none;overflow:hidden;min-height:900px;display:block;" scrolling="no" id="4sU8kMLJfFuto6BRml1J"></iframe>
     </div>
   </div>
 </section>
 
-<!-- ─── QUIZ ─── -->
-<section id="quiz">
-  <div class="quiz-layout">
-    <div class="quiz-copy rev">
-      <div class="s-label">Start Now</div>
-      <h2>Do we qualify<br><span class="g">to work together?</span></h2>
-      <p>3 quick questions. If there's a fit, we schedule 30 minutes and show you exactly what's possible with your operation.</p>
-      <div class="quiz-bullets">
-        <div class="qb"><div class="qb-check">✓</div>Onboarding in ~15 days — personalized messages, calendar and WhatsApp connected.</div>
-        <div class="qb"><div class="qb-check">✓</div>We test everything before launch. You approve it.</div>
-        <div class="qb"><div class="qb-check">✓</div>We launch and stay in communication with you.</div>
-      </div>
-    </div>
-
-    <div class="quiz-box rev d1">
-      <div class="qprog">
-        <div class="qp on" id="p1"></div>
-        <div class="qp" id="p2"></div>
-        <div class="qp" id="p3"></div>
-        <div class="qp" id="p4"></div>
-        <div class="qp" id="p5"></div>
-        <div class="qp" id="p6"></div>
-      </div>
-
-      <!-- Step 1 -->
-      <div class="qstep on" id="s1">
-        <div class="qstep-num">01 / 04</div>
-        <div class="qstep-q">How many solar deals do you close per month?</div>
-        <div class="qstep-hint">This helps us understand the size of your operation.</div>
-        <div class="qopts">
-          <div class="qopt" onclick="qPick(this,'rev','0-2')"><div class="qopt-icon">🌱</div><div><div class="qopt-title">0 – 2 deals</div><div class="qopt-desc">Just starting out or inconsistent months</div></div></div>
-          <div class="qopt" onclick="qPick(this,'rev','3-7')"><div class="qopt-icon">📈</div><div><div class="qopt-title">3 – 7 deals</div><div class="qopt-desc">Active operation, looking to scale</div></div></div>
-          <div class="qopt" onclick="qPick(this,'rev','8-15')"><div class="qopt-icon">🚀</div><div><div class="qopt-title">8 – 15 deals</div><div class="qopt-desc">Established team, looking to optimize</div></div></div>
-          <div class="qopt" onclick="qPick(this,'rev','15+')"><div class="qopt-icon">🏆</div><div><div class="qopt-title">15+ deals</div><div class="qopt-desc">Large operation, multiple teams</div></div></div>
-        </div>
-      </div>
-
-      <!-- Step 2 -->
-      <div class="qstep" id="s2">
-        <div class="qstep-num">02 / 04</div>
-        <div class="qstep-q">How urgent is this for you?</div>
-        <div class="qstep-hint">Be honest — it helps us prepare the right conversation.</div>
-        <div class="qopts">
-          <div class="qopt" onclick="qPick(this,'urgency','now')"><div class="qopt-icon">⚡</div><div><div class="qopt-title">I need it now</div><div class="qopt-desc">Every week without a system is money I'm leaving on the table</div></div></div>
-          <div class="qopt" onclick="qPick(this,'urgency','month')"><div class="qopt-icon">📅</div><div><div class="qopt-title">This month</div><div class="qopt-desc">I'm ready to move soon</div></div></div>
-          <div class="qopt" onclick="qPick(this,'urgency','later')"><div class="qopt-icon">🤔</div><div><div class="qopt-title">Just evaluating</div><div class="qopt-desc">No rush right now</div></div></div>
-        </div>
-        <button class="qback" onclick="goStep('s1',1)">← Back</button>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="qstep" id="s3">
-        <div class="qstep-num">03 / 04</div>
-        <div class="qstep-q">Do you have at least $5,000 to invest?</div>
-        <div class="qstep-hint">This covers the full system setup — it's a one-time investment, not monthly.</div>
-        <div class="qopts">
-          <div class="qopt" onclick="qPick(this,'budget','yes')"><div class="qopt-icon">✅</div><div><div class="qopt-title">Yes, I have $5,000+</div><div class="qopt-desc">Ready to invest if it's the right solution</div></div></div>
-          <div class="qopt" onclick="qPick(this,'budget','almost')"><div class="qopt-icon">🔜</div><div><div class="qopt-title">Almost — can have it soon</div><div class="qopt-desc">Can complete it in the next few days</div></div></div>
-          <div class="qopt" onclick="qPick(this,'budget','no')"><div class="qopt-icon">❌</div><div><div class="qopt-title">Not yet</div><div class="qopt-desc">Don't have that budget available right now</div></div></div>
-        </div>
-        <button class="qback" onclick="goStep('s2',2)">← Back</button>
-      </div>
-
-      <!-- Disqualified -->
-      <div class="qstep" id="s-disq">
-        <div style="text-align:center;padding:16px 0 8px;">
-          <div style="font-size:48px;margin-bottom:16px;">🤝</div>
-          <div class="qstep-q" style="margin-bottom:12px;" id="disq-title">Thanks for your honesty</div>
-          <div class="qstep-hint" style="margin-bottom:0;font-size:14px;line-height:1.7;color:var(--light);" id="disq-msg">When you're ready to move, come back. We only open slots for companies ready to act now.</div>
-        </div>
-      </div>
-
-      <!-- Step 4 -->
-      <div class="qstep" id="s4">
-        <div class="qstep-num">04 / 04</div>
-        <div class="qstep-q">Which system do you need?</div>
-        <div class="qstep-hint">This helps us prepare the call with the right numbers for you.</div>
-        <div class="qopts">
-          <div class="qopt" onclick="qPick(this,'system','inbound')"><div class="qopt-icon">📲</div><div><div class="qopt-title">Inbound WhatsApp</div><div class="qopt-desc">AI responds to leads who text me via WhatsApp in 8 seconds</div></div></div>
-          <div class="qopt" onclick="qPick(this,'system','reactivation')"><div class="qopt-icon">🔄</div><div><div class="qopt-title">Reactivation</div><div class="qopt-desc">AI contacts my dormant lead database one-to-one</div></div></div>
-          <div class="qopt" onclick="qPick(this,'system','voice')"><div class="qopt-icon">📞</div><div><div class="qopt-title">Voice AI (Inbound Calls)</div><div class="qopt-desc">AI answers in &lt;2s, qualifies and books in Google Calendar — or does live transfer if the lead is ready</div></div></div>
-          <div class="qopt" onclick="qPick(this,'system','all')"><div class="qopt-icon">🚀</div><div><div class="qopt-title">All 3 systems</div><div class="qopt-desc">WhatsApp + Reactivation + Voice AI — total coverage, no opportunity escapes</div></div></div>
-          <div class="qopt" onclick="toggleCustomSystem(this)">
-            <div class="qopt-icon">✏️</div>
-            <div style="flex:1;">
-              <div class="qopt-title">Other / Not sure</div>
-              <div class="qopt-desc">Tell us what you need and we'll build it on the call</div>
-              <input id="custom-system-input" class="qinput" type="text" placeholder="Type here..." style="display:none;margin-top:10px;font-size:13px;padding:9px 12px;" onclick="event.stopPropagation()" oninput="qAnswers.system=this.value"/>
-            </div>
-          </div>
-        </div>
-        <button class="qback" onclick="goStep('s3',3)">← Back</button>
-      </div>
-
-      <!-- Step 5 -->
-      <div class="qstep" id="s5">
-        <div class="qstep-q">You qualify! 🎉 Book your call</div>
-        <div class="qstep-hint" style="margin-bottom:18px;">Fill in your details and pick a time — 30 min, no obligation.</div>
-        <div class="qfields" style="margin-bottom:16px;">
-          <div><div class="qlabel">Name *</div><input class="qinput" id="q-name" type="text" placeholder="e.g. James Thompson"/></div>
-          <div><div class="qlabel">Solar Company</div><input class="qinput" id="q-company" type="text" placeholder="e.g. SunPro Energy"/></div>
-          <div><div class="qlabel">WhatsApp / Phone *</div><input class="qinput" id="q-phone" type="tel" placeholder="+1 (555) 000-0000"/></div>
-        </div>
-        <button class="qbtn" id="btn-q" onclick="submitQualified(event)">See Availability →</button>
-        <button class="qback" onclick="goStep('s4',4)">← Back</button>
-      </div>
-
-      <!-- Step 6 -->
-      <div class="qstep" id="s6">
-        <div id="q-confirm-card" style="display:none" class="confirm-card">
-          <div class="confirm-head">
-            <span style="font-size:18px;">✅</span>
-            <div><div class="confirm-head-title">Info saved</div><div class="confirm-head-sub">Preparing your call...</div></div>
-          </div>
-          <div class="confirm-grid" id="q-confirm-grid"></div>
-        </div>
-        <div class="qstep-q">Pick your time slot</div>
-        <div class="qstep-hint" style="margin-bottom:14px;">30 minutes · no obligation</div>
-        <div class="cal-wrap">
-          <iframe src="https://api.leadconnectorhq.com/widget/booking/KRwjkSAOlsV9SCTfgpnE"
-            style="width:100%;border:none;overflow:hidden;min-height:600px;display:block;"
-            scrolling="no" id="cal-iframe"></iframe>
-        </div>
-        <button class="qback" style="margin-top:14px;" onclick="goStep('s5',5)">← Back</button>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- FOOTER -->
 <footer>
-  <!-- Karvina Logo in footer -->
-  <a href="#" class="karvina-logo">
-    <svg class="karvina-logo-mark" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="lg3" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#00E87A"/>
-          <stop offset="100%" stop-color="#00C9B1"/>
-        </linearGradient>
-      </defs>
-      <path d="M19 2L34.5 11V27L19 36L3.5 27V11L19 2Z" stroke="url(#lg3)" stroke-width="1.5" fill="none" opacity="0.4"/>
-      <path d="M13 11V27M13 19L22 11M13 19L22 27" stroke="url(#lg3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="26" cy="12" r="2.5" fill="url(#lg3)" opacity="0.7"/>
-    </svg>
-    <div class="karvina-logo-text">
-      <span class="karvina-logo-name" style="font-size:14px;">Karvina</span>
-      <span class="karvina-logo-sub">Ventures LLC</span>
-    </div>
-  </a>
-  <p>AI Sales Automation for US Solar Companies · Wyoming, USA</p>
-  <p>© 2025 Karvina Ventures LLC. All rights reserved.</p>
-</footer>
-
-<script>
-const GHL_TOKEN       = 'pit-052efee6-63bc-4602-b2d0-ed09472daae9';
-const GHL_LOCATION_ID = 'v5d9zRYagClVG0pqMbhg';
-
-// ── ROI CALCULATOR ──
-function fmt(n){return n>=1000000?'$'+(n/1000000).toFixed(1)+'M':n>=1000?'$'+(n/1000).toFixed(0)+'K':'$'+n.toFixed(0);}
-
-function calcROI(el){
-  if(el){
-    const min=+el.min,max=+el.max,val=+el.value;
-    el.style.setProperty('--pct',((val-min)/(max-min)*100)+'%');
-  }
-  const leads=+document.getElementById('sl-leads').value;
-  const deal=+document.getElementById('sl-deal').value;
-  const close=+document.getElementById('sl-close').value/100;
-  const react=+document.getElementById('sl-react').value/100;
-  const reacted=Math.round(leads*react);
-  const closed=Math.round(reacted*close);
-  const rev=closed*deal;
-  document.getElementById('lbl-leads').textContent=leads.toLocaleString();
-  document.getElementById('lbl-deal').textContent='$'+deal.toLocaleString();
-  document.getElementById('lbl-close').textContent=Math.round(close*100)+'%';
-  document.getElementById('lbl-react').textContent=(react*100)+'%';
-  document.getElementById('roi-revenue').textContent=fmt(rev);
-  document.getElementById('roi-sub').textContent='In commissions from '+leads.toLocaleString()+' contacts already in your database.';
-  document.getElementById('rb-leads').textContent=leads.toLocaleString();
-  document.getElementById('rb-react').textContent=reacted.toLocaleString();
-  document.getElementById('rb-close').textContent=closed.toLocaleString();
-  document.getElementById('rb-rev').textContent=fmt(rev);
-  document.getElementById('math-leads').textContent=leads.toLocaleString();
-  document.getElementById('math-react').textContent=(react*100)+'%';
-  document.getElementById('math-reacted').textContent=reacted.toLocaleString();
-  document.getElementById('math-close').textContent=Math.round(close*100)+'%';
-  document.getElementById('math-closed').textContent=closed.toLocaleString();
-  document.getElementById('math-deal').textContent=deal.toLocaleString();
-  document.getElementById('math-total').textContent=fmt(rev);
-}
-['sl-leads','sl-deal','sl-close','sl-react'].forEach(id=>{
-  const el=document.getElementById(id);
-  const min=+el.min,max=+el.max,val=+el.value;
-  el.style.setProperty('--pct',((val-min)/(max-min)*100)+'%');
-});
-calcROI(null);
-
-// ── QUIZ ──
-const qAnswers = {};
-
-function toggleCustomSystem(el) {
-  document.querySelectorAll('.qopt').forEach(o => o.classList.remove('sel'));
-  el.classList.add('sel');
-  const inp = document.getElementById('custom-system-input');
-  inp.style.display = 'block';
-  inp.focus();
-  qAnswers.system = inp.value || 'custom';
-}
-
-function qPick(el, key, val) {
-  document.querySelectorAll('.qopt').forEach(o => o.classList.remove('sel'));
-  el.classList.add('sel');
-  const customInp = document.getElementById('custom-system-input');
-  if (customInp) customInp.style.display = 'none';
-  qAnswers[key] = val;
-  setTimeout(() => {
-    if (key === 'rev') { goStep('s2', 2); return; }
-    if (key === 'urgency') { if (val === 'later') { showDisq('urgency'); return; } goStep('s3', 3); return; }
-    if (key === 'budget') { if (val === 'no') { showDisq('budget'); return; } goStep('s4', 4); return; }
-    if (key === 'system') { goStep('s5', 5); return; }
-  }, 300);
-}
-
-function showDisq(reason) {
-  const titles = { urgency: 'When you\'re ready, we\'ll be here.', budget: 'When you have the budget, we\'ll be here.' };
-  const msgs = { urgency: 'We only open slots for companies ready to move now. When the time is right, come back and we\'ll make it happen.', budget: 'This investment covers the full system setup. When you have the $5,000 available, reach out and we\'ll open a slot for you.' };
-  document.getElementById('disq-title').textContent = titles[reason];
-  document.getElementById('disq-msg').textContent = msgs[reason];
-  goStep('s-disq', 5);
-}
-
-function goStep(id, n) {
-  document.querySelectorAll('.qstep').forEach(s => s.classList.remove('on'));
-  document.getElementById(id).classList.add('on');
-  dots(n);
-  setTimeout(() => { document.querySelector('.quiz-box').scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
-}
-
-function dots(n) {
-  ['p1','p2','p3','p4','p5','p6'].forEach((id, i) => { document.getElementById(id).classList.toggle('on', i < n); });
-}
-
-function errQ(id) {
-  const el = document.getElementById(id);
-  el.classList.add('err');
-  el.addEventListener('input', () => el.classList.remove('err'), {once:true});
-}
-
-async function submitQualified(e) {
-  const btn = e.target;
-  const name = document.getElementById('q-name').value.trim();
-  const company = document.getElementById('q-company').value.trim();
-  const phone = document.getElementById('q-phone').value.trim();
-  if (!name) { errQ('q-name'); return; }
-  if (!phone) { errQ('q-phone'); return; }
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span> Saving...';
-  try {
-    if (GHL_TOKEN) {
-      await fetch('https://services.leadconnectorhq.com/contacts/', {
-        method: 'POST',
-        headers: {'Authorization':'Bearer '+GHL_TOKEN,'Content-Type':'application/json','Version':'2021-07-28'},
-        body: JSON.stringify({
-          firstName: name.split(' ')[0],
-          lastName: name.split(' ').slice(1).join(' ') || '',
-          companyName: company,
-          phone,
-          locationId: GHL_LOCATION_ID,
-          customFields: [
-            {key:'deals_per_month', field_value: qAnswers.rev || ''},
-            {key:'urgency', field_value: qAnswers.urgency || ''},
-            {key:'budget', field_value: qAnswers.budget || ''},
-            {key:'system_of_interest', field_value: qAnswers.system || ''},
-          ],
-          tags: ['landing-qualified-karvina'],
-          source: 'Karvina Ventures Landing Page'
-        })
-      });
-    }
-  } catch(e) { console.warn('GHL:', e); }
-  const sysLabels = {inbound:'Inbound WhatsApp',reactivation:'Reactivation',voice:'Voice AI',all:'All 3 systems'};
-  const sysLabel = sysLabels[qAnswers.system] || qAnswers.system || '—';
-  const fields = [['Name',name],['Phone',phone],['System',sysLabel],['Deals/month',qAnswers.rev||'—']];
-  document.getElementById('q-confirm-grid').innerHTML = fields.map(([k,v]) =>
-    `<div class="cf"><div class="cf-lbl">${k}</div><div class="cf-val">${v}</div></div>`
-  ).join('');
-  document.getElementById('q-confirm-card').style.display = 'block';
-  btn.disabled = false;
-  btn.innerHTML = 'See Availability →';
-  goStep('s6', 6);
-}
-
-// ── CONVERSATION PREVIEW ──
-const scenarios = {
-  reactivation: {
-    manual: [
-      { type:'out', text:'Hey', time:'Mon 9:02 AM', day:'3 months later…' },
-      { type:'out', text:'James?', time:'Mon 9:03 AM' },
-    ],
-    manualTyping: true,
-    ai: [
-      { type:'out', text:'Hey James! 👋 This is Alex from SolarPro — our team came through your area a while back.\n\nNot sure what happened at the time — maybe the timing wasn\'t right.\n\nWould you be open to picking up the conversation? ☀️', time:'Tue 8:14 AM', day:'Automated · Day 1' },
-      { type:'in', text:'Yeah I remember. I was super busy at the time honestly', time:'Tue 10:31 AM' },
-      { type:'out', text:'Totally get it — no pressure at all 🙏\n\nJust wanted to check if the timing is different now.\n\nIf you show me your last electric bill, in 15 minutes I can tell you exactly how much you could be saving ⚡', time:'Tue 10:31 AM', day:'AI responds instantly' },
-      { type:'in', text:'My bill is like $280 a month', time:'Tue 10:44 AM' },
-      { type:'out', text:'James that\'s perfect — with $280/mo you could cut it 70–80%.\n\nThat\'s $190–$220 back in your pocket every month 💰\n\nCan we do a 20-min call to walk through the exact numbers for your home? I have Thu 10am or Fri 2pm 📅', time:'Tue 10:44 AM' },
-      { type:'in', text:'Thursday works 👍', time:'Tue 10:51 AM' },
-      { type:'out', text:'✅ Confirmed! Thursday 10am — calendar invite on its way.\n\nYou\'ll also get a reminder the day before. See you Thursday! 🤝', time:'Tue 10:51 AM', day:'Appointment booked 🎉' }
-    ]
-  },
-  inbound: {
-    manual: [
-      { type:'in', text:'Hi I saw your Facebook ad about solar panels. How much does it cost?', time:'Sat 9:04 PM', day:'Saturday 9pm' },
-    ],
-    manualNoReply: true,
-    ai: [
-      { type:'in', text:'Hi I saw your Facebook ad about solar panels. How much does it cost?', time:'Sat 9:04 PM', day:'Saturday 9pm' },
-      { type:'out', text:'Hey Sarah! 👋 Thanks for reaching out — great timing!\n\nQuick question to make sure solar makes sense for you: do you own your home or rent?', time:'Sat 9:04 PM', day:'AI responds in 8 seconds ⚡' },
-      { type:'in', text:'Own it yes', time:'Sat 9:06 PM' },
-      { type:'out', text:'Perfect! And roughly how much is your electric bill each month?', time:'Sat 9:06 PM' },
-      { type:'in', text:'Around $210–$230', time:'Sat 9:08 PM' },
-      { type:'out', text:'Sarah — with that usage you\'re an ideal candidate ☀️\n\nYou could reduce your bill by 70–80%.\n\nWant to schedule a free 20-min consult to see the exact numbers for your home? 📊', time:'Sat 9:08 PM' },
-      { type:'in', text:'Yes, definitely!', time:'Sat 9:10 PM' },
-      { type:'out', text:'Great! I have Sunday 11am or Monday 10am — which works better?\n\nYou\'ll get a reminder before the call 📅', time:'Sat 9:10 PM' },
-      { type:'in', text:'Sunday at 11 works!', time:'Sat 9:11 PM' },
-      { type:'out', text:'✅ Done! Sunday 11am — invite sent.\n\nLooking forward to showing you the savings, Sarah! ☀️', time:'Sat 9:11 PM', day:'Booked at 9:11pm Saturday 🎉' }
-    ]
-  }
-};
-
-let activeScenario = 'reactivation';
-let previewTriggered = false;
-
-function switchScenario(s, btn) {
-  if (s === activeScenario) return;
-  activeScenario = s;
-  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.scenario-bar').forEach(b => b.classList.add('hidden'));
-  document.getElementById('scenario-bar-' + s).classList.remove('hidden');
-  document.querySelectorAll('.side-sub').forEach(el => el.classList.add('hidden'));
-  document.getElementById('manual-sub-' + s).classList.remove('hidden');
-  document.getElementById('ai-sub-' + s).classList.remove('hidden');
-  document.querySelectorAll('.side-result').forEach(el => el.classList.add('hidden'));
-  document.getElementById('manual-result-' + s).classList.remove('hidden');
-  document.getElementById('ai-result-' + s).classList.remove('hidden');
-  document.getElementById('wa-manual').innerHTML = '';
-  document.getElementById('wa-ai').innerHTML = '';
-  runDualAnimation(s);
-}
-
-function addMsg(container, m, callback) {
-  if (m.day) {
-    const d = document.createElement('div');
-    d.className = 'wa-day-label'; d.textContent = m.day;
-    container.appendChild(d);
-    container.scrollTop = container.scrollHeight;
-  }
-  if (m.type === 'out') {
-    const typing = document.createElement('div');
-    typing.className = 'wa-typing';
-    typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-    container.appendChild(typing);
-    container.scrollTop = container.scrollHeight;
-    setTimeout(() => {
-      if (typing.parentNode) typing.parentNode.removeChild(typing);
-      insertMsg(container, m, callback);
-    }, 900);
-  } else { insertMsg(container, m, callback); }
-}
-
-function insertMsg(container, m, callback) {
-  const el = document.createElement('div');
-  el.className = 'wa-msg ' + m.type;
-  el.style.opacity = '0'; el.style.transform = 'translateY(6px)';
-  el.style.transition = 'all 0.25s ease';
-  const txt = (m.text || '').replace(/\n/g, '<br>');
-  el.innerHTML = txt + '<div class="wa-time">' + m.time + (m.type==='out' ? ' <span class="wa-tick">✓✓</span>' : '') + '</div>';
-  container.appendChild(el);
-  container.scrollTop = container.scrollHeight;
-  setTimeout(() => { el.style.opacity='1'; el.style.transform='none'; }, 30);
-  if (callback) callback();
-}
-
-function animateSequence(container, msgs, noReply, typing, onDone) {
-  if (noReply) {
-    if (msgs.length > 0) {
-      insertMsg(container, msgs[0], null);
-      const pause = document.createElement('div');
-      pause.className = 'wa-day-label';
-      pause.textContent = '— No reply until Monday morning —';
-      setTimeout(() => { container.appendChild(pause); container.scrollTop = container.scrollHeight; if(onDone) onDone(); }, 1200);
-    }
-    return;
-  }
-  let i = 0;
-  function next() {
-    if (i >= msgs.length) { if(onDone) onDone(); return; }
-    const m = msgs[i]; i++;
-    const delay = m.type === 'out' ? 1400 : 800;
-    addMsg(container, m, () => { setTimeout(next, delay); });
-  }
-  next();
-}
-
-function runDualAnimation(s) {
-  const sc = scenarios[s];
-  const manualContainer = document.getElementById('wa-manual');
-  const aiContainer = document.getElementById('wa-ai');
-  manualContainer.innerHTML = '';
-  aiContainer.innerHTML = '';
-
-  setTimeout(() => {
-    animateSequence(manualContainer, sc.manual, sc.manualNoReply || false, sc.manualTyping || false, null);
-    if (sc.manualTyping) {
-      setTimeout(() => {
-        const typing = document.createElement('div');
-        typing.className = 'wa-typing';
-        typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-        const note = document.createElement('div');
-        note.className = 'wa-day-label';
-        note.textContent = '— Still composing message 47 of 3,000 —';
-        manualContainer.appendChild(typing);
-        manualContainer.appendChild(note);
-        manualContainer.scrollTop = manualContainer.scrollHeight;
-      }, 2200);
-    }
-  }, 300);
-
-  setTimeout(() => { animateSequence(aiContainer, sc.ai, false, false, null); }, 600);
-}
-
-const previewObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting && !previewTriggered) {
-      previewTriggered = true;
-      runDualAnimation('reactivation');
-    }
-  });
-}, { threshold: 0.15 });
-const previewSection = document.getElementById('preview');
-if (previewSection) previewObs.observe(previewSection);
-
-const obs = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('v'); }); }, {threshold:0.07,rootMargin:'0px 0px -20px 0px'});
-document.querySelectorAll('.rev').forEach(el => obs.observe(el));
-setTimeout(() => document.querySelectorAll('#hero .rev').forEach(el => el.classList.add('v')), 60);
-</script>
-</body>
-</html>
+  <div class="footer-logo">Karvina Ventures</div>
+  <div class="footer-info">
+    KARVINA VENTURES LLC &nbsp;&middot;&nbsp; 30 N Gould St Ste R, Sheridan, WY 82801<br>
+    info@karvinaventures.com &nbsp;&middot;&nbsp; +1 (407) 913-3220 &nbsp;&middot;&nbsp; <a href="https://www.karvinaventures.com" style="color:#777;">www.karvinaventures.com</a><br>
+    &copy; 2026 KARVINA VENTURES LLC. All rights res
